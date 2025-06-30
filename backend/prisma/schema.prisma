@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
   output   = "../generated/prisma"
 }
 
@@ -16,7 +16,8 @@ datasource db {
 
 model PowerGridBalance {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  balanceId   String   @unique // Original REE balance ID (e.g., "bal1")
+  balanceId   String // Original REE balance ID (e.g., "bal1")
+  balanceDate DateTime // Date of the balance data
   type        String // e.g., "Balance de energía eléctrica"
   title       String
   description String?
@@ -31,12 +32,13 @@ model PowerGridBalance {
   // Related energy categories
   energyCategories EnergyCategory[]
 
+  @@unique([balanceId, balanceDate])
   @@map("power_grid_balances")
 }
 
 model EnergyCategory {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  categoryId  String // Original REE category ID (e.g., "Renovable")
+  categoryId  String   @unique // Original REE category ID (e.g., "Renovable")
   type        String // Category type (e.g., "Renovable", "No-Renovable")
   title       String // Display title
   description String?
@@ -56,7 +58,7 @@ model EnergyCategory {
 
 model EnergySource {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  sourceId    String // Original REE source ID (e.g., "10288")
+  sourceId    String   @unique // Original REE source ID (e.g., "10288")
   groupId     String // Group this source belongs to
   type        String // Source type (e.g., "Hidráulica", "Eólica")
   title       String // Display title
@@ -95,5 +97,7 @@ model EnergyValue {
   sourceId String       @db.ObjectId
   source   EnergySource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
 
+  // Compound unique constraint for sourceId + datetime
+  @@unique([sourceId, datetime])
   @@map("energy_values")
 }
