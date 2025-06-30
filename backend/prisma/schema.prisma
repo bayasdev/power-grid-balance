@@ -13,3 +13,87 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model PowerGridBalance {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  balanceId   String   @unique // Original REE balance ID (e.g., "bal1")
+  type        String // e.g., "Balance de energía eléctrica"
+  title       String
+  description String?
+  lastUpdate  DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Cache metadata
+  cacheHit      Boolean?
+  cacheExpireAt DateTime?
+
+  // Related energy categories
+  energyCategories EnergyCategory[]
+
+  @@map("power_grid_balances")
+}
+
+model EnergyCategory {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  categoryId  String // Original REE category ID (e.g., "Renovable")
+  type        String // Category type (e.g., "Renovable", "No-Renovable")
+  title       String // Display title
+  description String?
+  lastUpdate  DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationship to balance
+  balanceId String           @db.ObjectId
+  balance   PowerGridBalance @relation(fields: [balanceId], references: [id], onDelete: Cascade)
+
+  // Related energy sources
+  energySources EnergySource[]
+
+  @@map("energy_categories")
+}
+
+model EnergySource {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  sourceId    String // Original REE source ID (e.g., "10288")
+  groupId     String // Group this source belongs to
+  type        String // Source type (e.g., "Hidráulica", "Eólica")
+  title       String // Display title
+  description String?
+  color       String? // Hex color for charts
+  icon        String?
+  magnitude   String?
+  isComposite Boolean  @default(false) // Whether this is a composite/calculated source
+  lastUpdate  DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Totals
+  total           Float
+  totalPercentage Float
+
+  // Relationship to category
+  categoryId String         @db.ObjectId
+  category   EnergyCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  // Related time series values
+  values EnergyValue[]
+
+  @@map("energy_sources")
+}
+
+model EnergyValue {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  value      Float // Energy value
+  percentage Float // Percentage of total
+  datetime   DateTime // Timestamp for this value
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relationship to energy source
+  sourceId String       @db.ObjectId
+  source   EnergySource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@map("energy_values")
+}
