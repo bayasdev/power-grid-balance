@@ -260,31 +260,43 @@ export const PowerGridDashboard: React.FC = () => {
           </TabsContent>
 
           <TabsContent value="comparison" className="space-y-4">
-            <div className="grid grid-cols-1 gap-4">
-              {filteredChartData.map((categoryData) => (
-                <Card key={categoryData.categoryType}>
-                  <CardHeader>
-                    <CardTitle>
-                      {categoryData.categoryTitle} - Comparación
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                      <TimeSeriesChart
-                        data={categoryData.data}
-                        title="Evolución Temporal"
-                      />
-                      <EnergyPieChart
-                        data={filteredTotalsData.filter(
-                          (d) => d.categoryType === categoryData.categoryType,
-                        )}
-                        title="Distribución"
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            {balanceLoading ? (
+              <LoadingCard title="Cargando datos de comparación..." />
+            ) : balanceError ? (
+              <ErrorDisplay error={balanceError} onRetry={retryBalance} />
+            ) : filteredChartData.length > 0 ? (
+              <div className="grid grid-cols-1 gap-4">
+                {filteredChartData.map((categoryData) => (
+                  <Card key={categoryData.categoryType}>
+                    <CardHeader>
+                      <CardTitle>
+                        {categoryData.categoryTitle} - Comparación
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <TimeSeriesChart
+                          data={categoryData.data}
+                          title="Evolución Temporal"
+                        />
+                        <EnergyPieChart
+                          data={filteredTotalsData.filter(
+                            (d) => d.categoryType === categoryData.categoryType
+                          )}
+                          title="Distribución"
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <Alert>
+                <AlertDescription>
+                  No hay datos disponibles para mostrar la comparación.
+                </AlertDescription>
+              </Alert>
+            )}
           </TabsContent>
         </Tabs>
       </div>
