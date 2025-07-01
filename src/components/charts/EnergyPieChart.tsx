@@ -106,7 +106,7 @@ export const EnergyPieChart: React.FC<EnergyPieChartProps> = ({
                           <span>Energía:</span>
                           <span className="font-medium text-foreground">
                             {formatEnergyValue(
-                              data.originalValue || data.value
+                              data.originalValue || data.value,
                             )}
                           </span>
                         </div>
@@ -177,7 +177,7 @@ export const EnergyDonutChart: React.FC<
 > = ({ data, ...props }) => {
   const totalAbsolute = data.reduce(
     (sum, item) => sum + Math.abs(item.total),
-    0
+    0,
   );
   const totalActual = data.reduce((sum, item) => sum + item.total, 0);
 
@@ -247,7 +247,7 @@ export const EnergyDonutChart: React.FC<
                             <span>Energía:</span>
                             <span className="font-medium text-foreground">
                               {formatEnergyValue(
-                                data.originalValue || data.value
+                                data.originalValue || data.value,
                               )}
                             </span>
                           </div>

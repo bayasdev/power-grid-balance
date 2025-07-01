@@ -115,7 +115,7 @@ export class REEApiService {
   async fetchElectricBalance(
     startDate: Date,
     endDate: Date,
-    timeTrunc: "hour" | "day" | "month" | "year" = "day"
+    timeTrunc: "hour" | "day" | "month" | "year" = "day",
   ): Promise<REEApiResponse> {
     const url = this.buildElectricBalanceUrl(startDate, endDate, timeTrunc);
 
@@ -134,7 +134,7 @@ export class REEApiService {
 
         if (error) {
           throw new Error(
-            `REE API request failed: ${error.message ?? "Unknown error"}`
+            `REE API request failed: ${error.message ?? "Unknown error"}`,
           );
         }
 
@@ -146,7 +146,7 @@ export class REEApiService {
       } catch (error) {
         console.error(
           `REE API attempt ${attempt}/${this.maxRetries} failed:`,
-          error
+          error,
         );
 
         if (attempt === this.maxRetries) {
@@ -154,7 +154,7 @@ export class REEApiService {
             `Failed to fetch data after ${this.maxRetries} attempts: ${
               error instanceof Error ? error.message : "Unknown error"
             }`,
-            error instanceof Error ? error : new Error(String(error))
+            error instanceof Error ? error : new Error(String(error)),
           );
         }
 
@@ -192,7 +192,7 @@ export class REEApiService {
    */
   async fetchDateRangeData(
     startDate: Date,
-    endDate: Date
+    endDate: Date,
   ): Promise<REEApiResponse> {
     return this.fetchElectricBalance(startDate, endDate, "day");
   }
@@ -210,7 +210,7 @@ export class REEApiService {
   private buildElectricBalanceUrl(
     startDate: Date,
     endDate: Date,
-    timeTrunc: string
+    timeTrunc: string,
   ): string {
     const start = format(startDate, "yyyy-MM-dd'T'HH:mm");
     const end = format(endDate, "yyyy-MM-dd'T'HH:mm");
@@ -224,7 +224,10 @@ export class REEApiService {
 }
 
 export class REEApiError extends Error {
-  constructor(message: string, public readonly cause?: Error) {
+  constructor(
+    message: string,
+    public readonly cause?: Error,
+  ) {
     super(message);
     this.name = "REEApiError";
   }

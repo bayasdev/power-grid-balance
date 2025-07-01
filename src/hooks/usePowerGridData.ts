@@ -67,7 +67,7 @@ export const useLatestElectricBalance = () => {
 // Hook for fetching energy sources by category
 export const useEnergySourcesByCategory = (
   categoryType: EnergySourceCategory,
-  dateRange?: DateRange
+  dateRange?: DateRange,
 ) => {
   const variables = dateRange
     ? {
@@ -133,7 +133,7 @@ export const useManualDataFetch = () => {
         throw err;
       }
     },
-    [mutate]
+    [mutate],
   );
 
   return {

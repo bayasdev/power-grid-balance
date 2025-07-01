@@ -27,8 +27,8 @@ describe("powerGridResolvers", () => {
       await expect(
         powerGridResolvers.Query.electricBalanceByDateRange(
           "not-a-date",
-          "2023-01-01"
-        )
+          "2023-01-01",
+        ),
       ).rejects.toThrow(/Invalid date format/);
     });
 
@@ -36,8 +36,8 @@ describe("powerGridResolvers", () => {
       await expect(
         powerGridResolvers.Query.electricBalanceByDateRange(
           "2023-01-01",
-          "bad-date"
-        )
+          "bad-date",
+        ),
       ).rejects.toThrow(/Invalid date format/);
     });
 
@@ -45,8 +45,8 @@ describe("powerGridResolvers", () => {
       await expect(
         powerGridResolvers.Query.electricBalanceByDateRange(
           "2023-02-01",
-          "2023-01-01"
-        )
+          "2023-01-01",
+        ),
       ).rejects.toThrow(/Start date must be before end date/);
     });
 
@@ -54,8 +54,8 @@ describe("powerGridResolvers", () => {
       await expect(
         powerGridResolvers.Query.electricBalanceByDateRange(
           "2020-01-01",
-          "2021-12-31"
-        )
+          "2021-12-31",
+        ),
       ).rejects.toThrow(/Date range cannot exceed 365 days/);
     });
   });

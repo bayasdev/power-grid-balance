@@ -42,7 +42,7 @@ export const LoadingCard: React.FC<LoadingCardProps> = ({
     <div
       className={cn(
         "flex flex-col items-center justify-center p-8 space-y-4 border rounded-lg bg-card text-card-foreground",
-        className
+        className,
       )}
     >
       <LoadingSpinner size="lg" />

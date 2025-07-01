@@ -38,7 +38,7 @@ describe("REEApiService", () => {
     const expectedEnd = format(end, "yyyy-MM-dd'T'HH:mm");
 
     expect(calledUrl).toBe(
-      `https://apidatos.ree.es/es/datos/balance/balance-electrico?start_date=${expectedStart}&end_date=${expectedEnd}&time_trunc=day`
+      `https://apidatos.ree.es/es/datos/balance/balance-electrico?start_date=${expectedStart}&end_date=${expectedEnd}&time_trunc=day`,
     );
   });
 
@@ -53,7 +53,7 @@ describe("REEApiService", () => {
     const end = new Date("2023-01-01T01:00:00Z");
 
     await expect(
-      reeApiService.fetchElectricBalance(start, end, "day")
+      reeApiService.fetchElectricBalance(start, end, "day"),
     ).rejects.toThrow(/Failed to fetch data after/);
 
     // Should have attempted 3 times (maxRetries)

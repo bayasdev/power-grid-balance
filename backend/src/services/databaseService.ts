@@ -21,7 +21,7 @@ export class DatabaseService {
    */
   async storeREEData(
     apiResponse: REEApiResponse,
-    balanceDate: Date
+    balanceDate: Date,
   ): Promise<void> {
     try {
       // Validate that we have the minimum required data
@@ -31,23 +31,23 @@ export class DatabaseService {
 
       const balanceRecord = await this._upsertPowerGridBalance(
         apiResponse,
-        balanceDate
+        balanceDate,
       );
       const categories = this._filterValidCategories(
-        apiResponse.included ?? []
+        apiResponse.included ?? [],
       );
 
       for (const categoryData of categories) {
         await this._upsertCategorySourcesAndValues(
           categoryData,
-          balanceRecord.id
+          balanceRecord.id,
         );
       }
     } catch (error) {
       console.error("Error storing REE data:", error);
       throw new DatabaseError(
         "Failed to store REE data in database",
-        error instanceof Error ? error : new Error(String(error))
+        error instanceof Error ? error : new Error(String(error)),
       );
     }
   }
@@ -57,7 +57,7 @@ export class DatabaseService {
    */
   private async _upsertCategorySourcesAndValues(
     categoryData: EnergyCategory,
-    balanceId: string
+    balanceId: string,
   ): Promise<void> {
     // Validate required fields before proceeding
     if (
@@ -68,7 +68,7 @@ export class DatabaseService {
     ) {
       console.warn(
         "Skipping category with missing required fields:",
-        categoryData.id
+        categoryData.id,
       );
       return;
     }
@@ -139,7 +139,7 @@ export class DatabaseService {
    */
   private async _upsertPowerGridBalance(
     apiResponse: REEApiResponse,
-    balanceDate: Date
+    balanceDate: Date,
   ): Promise<PowerGridBalance> {
     const normalizedBalanceDate = startOfDay(balanceDate);
 
@@ -182,14 +182,14 @@ export class DatabaseService {
    * Filters valid energy categories from the API response.
    */
   private _filterValidCategories(
-    included: REEApiResponse["included"]
+    included: REEApiResponse["included"],
   ): EnergyCategory[] {
     return included.filter((item): item is EnergyCategory => {
       // First check basic properties
       const hasBasicProperties =
         item.type &&
         ["Renovable", "No-Renovable", "Almacenamiento", "Demanda"].includes(
-          item.type
+          item.type,
         ) &&
         item.id &&
         item.attributes &&
@@ -222,14 +222,14 @@ export class DatabaseService {
    */
   private async _upsertEnergyValues(
     values: EnergyValue[],
-    sourceId: string
+    sourceId: string,
   ): Promise<void> {
     // Filter out values with missing required fields
     const validValues = values.filter(
       (value) =>
         value.datetime &&
         value.value !== undefined &&
-        value.percentage !== undefined
+        value.percentage !== undefined,
     );
 
     const valueUpsertPromises = validValues.map((value) => {
@@ -299,7 +299,7 @@ export class DatabaseService {
       console.error("Error fetching electric balance data:", error);
       throw new DatabaseError(
         "Failed to fetch electric balance data",
-        error instanceof Error ? error : new Error(String(error))
+        error instanceof Error ? error : new Error(String(error)),
       );
     }
   }
@@ -334,7 +334,7 @@ export class DatabaseService {
       console.error("Error fetching latest electric balance:", error);
       throw new DatabaseError(
         "Failed to fetch latest electric balance",
-        error instanceof Error ? error : new Error(String(error))
+        error instanceof Error ? error : new Error(String(error)),
       );
     }
   }
@@ -355,7 +355,7 @@ export class DatabaseService {
   async getEnergySourcesByCategory(
     categoryType: string,
     startDate?: Date,
-    endDate?: Date
+    endDate?: Date,
   ) {
     try {
       const dateFilter =
@@ -394,7 +394,7 @@ export class DatabaseService {
       console.error("Error fetching energy sources by category:", error);
       throw new DatabaseError(
         "Failed to fetch energy sources by category",
-        error instanceof Error ? error : new Error(String(error))
+        error instanceof Error ? error : new Error(String(error)),
       );
     }
   }
@@ -428,7 +428,7 @@ export class DatabaseService {
       console.error("Error fetching summary stats:", error);
       throw new DatabaseError(
         "Failed to fetch summary statistics",
-        error instanceof Error ? error : new Error(String(error))
+        error instanceof Error ? error : new Error(String(error)),
       );
     }
   }
@@ -455,7 +455,7 @@ export class DatabaseService {
       console.error("Error cleaning up old data:", error);
       throw new DatabaseError(
         "Failed to cleanup old data",
-        error instanceof Error ? error : new Error(String(error))
+        error instanceof Error ? error : new Error(String(error)),
       );
     }
   }
@@ -469,7 +469,10 @@ export class DatabaseService {
 }
 
 export class DatabaseError extends Error {
-  constructor(message: string, public readonly cause?: Error) {
+  constructor(
+    message: string,
+    public readonly cause?: Error,
+  ) {
     super(message);
     this.name = "DatabaseError";
   }

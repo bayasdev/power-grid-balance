@@ -276,7 +276,7 @@ export const PowerGridDashboard: React.FC = () => {
                       />
                       <EnergyPieChart
                         data={filteredTotalsData.filter(
-                          (d) => d.categoryType === categoryData.categoryType
+                          (d) => d.categoryType === categoryData.categoryType,
                         )}
                         title="Distribución"
                       />

@@ -20,9 +20,8 @@ describe("powerGridResolvers Mutation.manualDataFetch", () => {
   it("returns success response when scheduler.manualFetch resolves", async () => {
     manualFetchMock.mockResolvedValue(undefined);
 
-    const response = await powerGridResolvers.Mutation.manualDataFetch(
-      "current"
-    );
+    const response =
+      await powerGridResolvers.Mutation.manualDataFetch("current");
 
     expect(response).toMatchObject({
       success: true,
@@ -33,9 +32,8 @@ describe("powerGridResolvers Mutation.manualDataFetch", () => {
   it("handles errors from scheduler.manualFetch and returns failure response", async () => {
     manualFetchMock.mockRejectedValue(new Error("network failure"));
 
-    const response = await powerGridResolvers.Mutation.manualDataFetch(
-      "current"
-    );
+    const response =
+      await powerGridResolvers.Mutation.manualDataFetch("current");
 
     expect(response.success).toBe(false);
     expect(response.message).toMatch(/Failed to fetch data: network failure/);

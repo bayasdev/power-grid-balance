@@ -56,7 +56,7 @@ export const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({
     });
 
     return Array.from(dataMap.values()).sort(
-      (a, b) => (a.timestamp as number) - (b.timestamp as number)
+      (a, b) => (a.timestamp as number) - (b.timestamp as number),
     );
   }, [data, groupBy]);
 
@@ -79,7 +79,7 @@ export const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({
         .replace(/[^\w-]/g, "");
       const dataPoint = data.find(
         (d) =>
-          (groupBy === "source" ? d.sourceTitle : d.sourceTitle) === seriesName
+          (groupBy === "source" ? d.sourceTitle : d.sourceTitle) === seriesName,
       );
 
       acc[key] = {
@@ -240,7 +240,7 @@ export const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({
                 const dataPoint = data.find(
                   (d) =>
                     (groupBy === "source" ? d.sourceTitle : d.sourceTitle) ===
-                    seriesName
+                    seriesName,
                 );
                 const color = dataPoint?.color || getCategoryColor(seriesName);
 

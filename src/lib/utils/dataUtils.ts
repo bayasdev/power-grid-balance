@@ -13,7 +13,7 @@ import type {
  */
 export const formatDate = (
   dateString: string,
-  formatStr: string = "dd/MM/yyyy"
+  formatStr: string = "dd/MM/yyyy",
 ): string => {
   try {
     return format(parseISO(dateString), formatStr, { locale: es });
@@ -40,7 +40,7 @@ export const formatDateTime = (dateString: string): string => {
  */
 export const formatEnergyValue = (
   value: number,
-  magnitude?: string
+  magnitude?: string,
 ): string => {
   const units = magnitude || "MWh";
 
@@ -89,7 +89,7 @@ export const getSourceColor = (source: EnergySource, index: number): string => {
  * Process balance data for time series charts
  */
 export const processBalanceDataForChart = (
-  balances: PowerGridBalance[]
+  balances: PowerGridBalance[],
 ): CategoryChartData[] => {
   const categoryData: Map<string, CategoryChartData> = new Map();
 
@@ -129,7 +129,7 @@ export const processBalanceDataForChart = (
  * Process balance data for pie/bar charts showing totals
  */
 export const processBalanceDataForTotals = (
-  balances: PowerGridBalance[]
+  balances: PowerGridBalance[],
 ): SourceTotalData[] => {
   const sourceMap: Map<string, SourceTotalData> = new Map();
 
@@ -177,7 +177,7 @@ export const getCategoryColor = (categoryType: string): string => {
  * Calculate total energy by category
  */
 export const calculateCategoryTotals = (
-  balances: PowerGridBalance[]
+  balances: PowerGridBalance[],
 ): Record<string, number> => {
   const totals: Record<string, number> = {};
 
@@ -202,7 +202,7 @@ export const calculateCategoryTotals = (
 export const filterDataByDateRange = (
   data: ChartDataPoint[],
   startDate: Date,
-  endDate: Date
+  endDate: Date,
 ): ChartDataPoint[] => {
   return data.filter((point) => {
     const pointDate = parseISO(point.datetime);
@@ -215,7 +215,7 @@ export const filterDataByDateRange = (
  */
 export const groupDataByInterval = (
   data: ChartDataPoint[],
-  intervalHours: number = 1
+  intervalHours: number = 1,
 ): ChartDataPoint[] => {
   const grouped: Map<string, ChartDataPoint[]> = new Map();
 
@@ -226,7 +226,7 @@ export const groupDataByInterval = (
       Math.floor(date.getHours() / intervalHours) * intervalHours,
       0,
       0,
-      0
+      0,
     );
 
     const key = intervalStart.toISOString();
@@ -251,6 +251,6 @@ export const groupDataByInterval = (
       };
     })
     .sort(
-      (a, b) => new Date(a.datetime).getTime() - new Date(b.datetime).getTime()
+      (a, b) => new Date(a.datetime).getTime() - new Date(b.datetime).getTime(),
     );
 };

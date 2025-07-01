@@ -47,10 +47,10 @@ export const graphql = {
 // Start the server
 serve(app, (info) => {
   console.log(
-    `🔌 Power Grid Balance API running at http://localhost:${info.port}`
+    `🔌 Power Grid Balance API running at http://localhost:${info.port}`,
   );
   console.log(
-    `📊 GraphQL Playground available at http://localhost:${info.port}/graphql`
+    `📊 GraphQL Playground available at http://localhost:${info.port}/graphql`,
   );
 
   // Start the scheduler after server is running

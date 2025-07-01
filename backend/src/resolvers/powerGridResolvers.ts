@@ -32,7 +32,7 @@ interface SummaryStatsResponse {
 const validateDateString = (dateStr: string): Date => {
   if (!isValid(parseISO(dateStr))) {
     throw new Error(
-      `Invalid date format: ${dateStr}. Use ISO 8601 format (YYYY-MM-DD)`
+      `Invalid date format: ${dateStr}. Use ISO 8601 format (YYYY-MM-DD)`,
     );
   }
   return parseISO(dateStr);
@@ -44,7 +44,7 @@ const validateDateRange = (startDate: Date, endDate: Date): void => {
   }
 
   const daysDiff = Math.ceil(
-    (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+    (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
   );
   if (daysDiff > 365) {
     throw new Error("Date range cannot exceed 365 days");
@@ -63,12 +63,12 @@ export const powerGridResolvers = {
       validateDateRange(start, end);
 
       console.log(
-        `Fetching electric balance data from ${startDate} to ${endDate}`
+        `Fetching electric balance data from ${startDate} to ${endDate}`,
       );
 
       const data = await databaseService.getElectricBalanceByDateRange(
         startOfDay(start),
-        endOfDay(end)
+        endOfDay(end),
       );
 
       if (!data || data.length === 0) {
@@ -120,7 +120,7 @@ export const powerGridResolvers = {
     energySourcesByCategory: async (
       categoryType: EnergySourceCategory,
       startDate?: string,
-      endDate?: string
+      endDate?: string,
     ) => {
       let start: Date | undefined;
       let end: Date | undefined;
@@ -136,7 +136,7 @@ export const powerGridResolvers = {
       return await databaseService.getEnergySourcesByCategory(
         categoryType,
         start,
-        end
+        end,
       );
     },
 
