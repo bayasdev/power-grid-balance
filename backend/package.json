@@ -8,7 +8,8 @@
     "dev": "pylon dev -c \"node --enable-source-maps .pylon/index.js\"",
     "build": "pylon build",
     "db:generate": "prisma generate",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "test": "vitest"
   },
   "dependencies": {
     "@better-fetch/fetch": "^1.1.18",
@@ -22,7 +23,8 @@
   },
   "devDependencies": {
     "@getcronit/pylon-dev": "^1.0.0",
-    "@types/node-cron": "^3.0.11"
+    "@types/node-cron": "^3.0.11",
+    "vitest": "^3.2.4"
   },
   "repository": {
     "type": "git",
