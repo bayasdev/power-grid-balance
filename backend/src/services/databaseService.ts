@@ -263,7 +263,7 @@ export class DatabaseService {
     try {
       const balances = await this.prisma.powerGridBalance.findMany({
         where: {
-          createdAt: {
+          balanceDate: {
             gte: startDate,
             lte: endDate,
           },
