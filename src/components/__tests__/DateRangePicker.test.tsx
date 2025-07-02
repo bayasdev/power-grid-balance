@@ -55,7 +55,7 @@ describe("DateRangePicker", () => {
   it("should apply custom className", () => {
     const customClass = "custom-date-picker";
     const { container } = render(
-      <DateRangePicker {...mockProps} className={customClass} />
+      <DateRangePicker {...mockProps} className={customClass} />,
     );
 
     expect(container.firstChild).toHaveClass(customClass);
@@ -127,7 +127,7 @@ describe("QuickDateButtons", () => {
       <QuickDateButtons
         onPresetSelect={mockOnPresetSelect}
         className={customClass}
-      />
+      />,
     );
 
     expect(container.firstChild).toHaveClass(customClass);

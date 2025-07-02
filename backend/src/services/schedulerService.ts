@@ -26,7 +26,7 @@ export class SchedulerService {
       },
       {
         scheduled: false,
-      }
+      },
     );
 
     // Fetch previous day data every hour (for completeness)
@@ -37,7 +37,7 @@ export class SchedulerService {
       },
       {
         scheduled: false,
-      }
+      },
     );
 
     // Fetch historical data daily at 2 AM
@@ -48,7 +48,7 @@ export class SchedulerService {
       },
       {
         scheduled: false,
-      }
+      },
     );
 
     // Data cleanup weekly on Sunday at 3 AM
@@ -59,7 +59,7 @@ export class SchedulerService {
       },
       {
         scheduled: false,
-      }
+      },
     );
 
     this.jobs = [
@@ -111,7 +111,7 @@ export class SchedulerService {
    * Manual trigger for data fetch
    */
   async manualFetch(
-    type: "current" | "previous" | "historical" = "current"
+    type: "current" | "previous" | "historical" = "current",
   ): Promise<void> {
     console.log(`Manual fetch triggered: ${type}`);
 
@@ -167,8 +167,8 @@ export class SchedulerService {
       console.log(
         `Current day data (${format(
           today,
-          "yyyy-MM-dd"
-        )}) fetched and stored successfully`
+          "yyyy-MM-dd",
+        )}) fetched and stored successfully`,
       );
     } catch (error) {
       await this.handleFetchError("current day", error);
@@ -189,8 +189,8 @@ export class SchedulerService {
       console.log(
         `Previous day data (${format(
           yesterday,
-          "yyyy-MM-dd"
-        )}) fetched and stored successfully`
+          "yyyy-MM-dd",
+        )}) fetched and stored successfully`,
       );
     } catch (error) {
       await this.handleFetchError("previous day", error);
@@ -215,16 +215,16 @@ export class SchedulerService {
           console.log(
             `Historical data for ${format(
               date,
-              "yyyy-MM-dd"
-            )} stored successfully`
+              "yyyy-MM-dd",
+            )} stored successfully`,
           );
         } catch (error) {
           console.error(
             `Failed to fetch historical data for ${format(
               date,
-              "yyyy-MM-dd"
+              "yyyy-MM-dd",
             )}:`,
-            error
+            error,
           );
           // Continue with next date
         }
@@ -247,7 +247,7 @@ export class SchedulerService {
       const deletedCount = await databaseService.cleanupOldData(daysToKeep);
 
       console.log(
-        `Data cleanup completed - Deleted ${deletedCount} old records`
+        `Data cleanup completed - Deleted ${deletedCount} old records`,
       );
     } catch (error) {
       console.error("Data cleanup failed:", error);
@@ -259,7 +259,7 @@ export class SchedulerService {
    */
   private async handleFetchError(
     context: string,
-    error: unknown
+    error: unknown,
   ): Promise<void> {
     const errorMessage = error instanceof Error ? error.message : String(error);
 

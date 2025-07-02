@@ -62,7 +62,7 @@ describe("TimeSeriesChart", () => {
     render(<TimeSeriesChart data={[]} />);
 
     expect(
-      screen.getByText("No hay datos disponibles para mostrar")
+      screen.getByText("No hay datos disponibles para mostrar"),
     ).toBeInTheDocument();
   });
 
@@ -82,7 +82,7 @@ describe("TimeSeriesChart", () => {
   it("should apply custom className", () => {
     const customClass = "custom-time-series";
     const { container } = render(
-      <TimeSeriesChart data={mockData} className={customClass} />
+      <TimeSeriesChart data={mockData} className={customClass} />,
     );
 
     expect(container.firstChild).toHaveClass(customClass);

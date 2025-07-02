@@ -13,7 +13,7 @@ describe("usePowerGridData hooks", () => {
       const daysDiff = Math.floor(
         (result.current.dateRange.endDate.getTime() -
           result.current.dateRange.startDate.getTime()) /
-          (1000 * 60 * 60 * 24)
+          (1000 * 60 * 60 * 24),
       );
       expect(daysDiff).toBe(7);
     });
@@ -39,7 +39,7 @@ describe("usePowerGridData hooks", () => {
       const daysDiff = Math.floor(
         (result.current.dateRange.endDate.getTime() -
           result.current.dateRange.startDate.getTime()) /
-          (1000 * 60 * 60 * 24)
+          (1000 * 60 * 60 * 24),
       );
       expect(daysDiff).toBe(30);
     });
@@ -50,7 +50,7 @@ describe("usePowerGridData hooks", () => {
       const daysDiff = Math.floor(
         (result.current.dateRange.endDate.getTime() -
           result.current.dateRange.startDate.getTime()) /
-          (1000 * 60 * 60 * 24)
+          (1000 * 60 * 60 * 24),
       );
       expect(daysDiff).toBe(0);
     });

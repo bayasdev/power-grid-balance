@@ -63,7 +63,7 @@ describe("EnergyPieChart", () => {
     render(<EnergyPieChart data={[]} />);
 
     expect(
-      screen.getByText("No hay datos disponibles para mostrar")
+      screen.getByText("No hay datos disponibles para mostrar"),
     ).toBeInTheDocument();
   });
 
@@ -78,14 +78,14 @@ describe("EnergyPieChart", () => {
     render(<EnergyPieChart data={mockData} />);
 
     expect(
-      screen.getByText("Distribución de Fuentes de Energía")
+      screen.getByText("Distribución de Fuentes de Energía"),
     ).toBeInTheDocument();
   });
 
   it("should apply custom className", () => {
     const customClass = "custom-pie-chart";
     const { container } = render(
-      <EnergyPieChart data={mockData} className={customClass} />
+      <EnergyPieChart data={mockData} className={customClass} />,
     );
 
     expect(container.firstChild).toHaveClass(customClass);
@@ -117,7 +117,7 @@ describe("EnergyPieChart", () => {
 
   it("should handle custom innerRadius and outerRadius", () => {
     render(
-      <EnergyPieChart data={mockData} innerRadius={50} outerRadius={150} />
+      <EnergyPieChart data={mockData} innerRadius={50} outerRadius={150} />,
     );
 
     expect(screen.getByTestId("pie-chart")).toBeInTheDocument();
@@ -168,14 +168,14 @@ describe("EnergyDonutChart", () => {
     render(<EnergyDonutChart data={mockData} />);
 
     expect(
-      screen.getByText("Distribución de Fuentes de Energía")
+      screen.getByText("Distribución de Fuentes de Energía"),
     ).toBeInTheDocument();
   });
 
   it("should apply custom className", () => {
     const customClass = "custom-donut-chart";
     const { container } = render(
-      <EnergyDonutChart data={mockData} className={customClass} />
+      <EnergyDonutChart data={mockData} className={customClass} />,
     );
 
     expect(container.firstChild).toHaveClass(customClass);

@@ -55,7 +55,7 @@ describe("ErrorDisplay", () => {
     render(<ErrorDisplay error={networkError} />);
 
     expect(
-      screen.getByText("Error de conexión. Verifica tu conexión a internet.")
+      screen.getByText("Error de conexión. Verifica tu conexión a internet."),
     ).toBeInTheDocument();
   });
 });

@@ -26,7 +26,7 @@ describe("ErrorBoundary", () => {
     render(
       <ErrorBoundary>
         <div>Test content</div>
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     expect(screen.getByText("Test content")).toBeInTheDocument();
@@ -36,7 +36,7 @@ describe("ErrorBoundary", () => {
     render(
       <ErrorBoundary>
         <ThrowError shouldThrow={true} />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     expect(screen.getByText("Error Inesperado")).toBeInTheDocument();
@@ -52,13 +52,13 @@ describe("ErrorBoundary", () => {
     render(
       <ErrorBoundary>
         <ErrorWithoutMessage />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     expect(
       screen.getByText(
-        "Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo."
-      )
+        "Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo.",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -68,7 +68,7 @@ describe("ErrorBoundary", () => {
     render(
       <ErrorBoundary fallback={customFallback}>
         <ThrowError shouldThrow={true} />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     expect(screen.getByText("Custom error fallback")).toBeInTheDocument();
@@ -81,7 +81,7 @@ describe("ErrorBoundary", () => {
     render(
       <ErrorBoundary>
         <ThrowError shouldThrow={true} />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     // Verify error state
@@ -102,13 +102,13 @@ describe("ErrorBoundary", () => {
     render(
       <ErrorBoundary>
         <ThrowError shouldThrow={true} />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     expect(consoleSpy).toHaveBeenCalledWith(
       "ErrorBoundary caught an error:",
       expect.any(Error),
-      expect.any(Object)
+      expect.any(Object),
     );
 
     consoleSpy.mockRestore();
@@ -118,7 +118,7 @@ describe("ErrorBoundary", () => {
     render(
       <ErrorBoundary>
         <ThrowError shouldThrow={true} />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     // Error should be displayed consistently

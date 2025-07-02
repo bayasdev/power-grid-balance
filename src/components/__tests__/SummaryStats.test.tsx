@@ -41,11 +41,11 @@ describe("SummaryStatsComponent", () => {
 
     expect(screen.getByText("Última Actualización")).toBeInTheDocument();
     expect(
-      screen.getByText("Datos más recientes disponibles")
+      screen.getByText("Datos más recientes disponibles"),
     ).toBeInTheDocument();
     // The formatted date will depend on timezone, so we just check it exists
     expect(
-      screen.getByText(/\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}/)
+      screen.getByText(/\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}/),
     ).toBeInTheDocument();
   });
 
@@ -67,7 +67,7 @@ describe("SummaryStatsComponent", () => {
     expect(screen.getByText("Activo")).toBeInTheDocument();
     expect(screen.getByText("3")).toBeInTheDocument();
     expect(
-      screen.getByText("Recopilando datos automáticamente")
+      screen.getByText("Recopilando datos automáticamente"),
     ).toBeInTheDocument();
   });
 
@@ -90,7 +90,7 @@ describe("SummaryStatsComponent", () => {
   it("should apply custom className", () => {
     const customClass = "custom-stats-class";
     const { container } = render(
-      <SummaryStatsComponent stats={mockStats} className={customClass} />
+      <SummaryStatsComponent stats={mockStats} className={customClass} />,
     );
 
     expect(container.firstChild).toHaveClass(customClass);
@@ -113,7 +113,7 @@ describe("SummaryStatsComponent", () => {
 describe("StatCard", () => {
   it("should render basic stat card", () => {
     render(
-      <StatCard title="Test Stat" value="100" description="Test description" />
+      <StatCard title="Test Stat" value="100" description="Test description" />,
     );
 
     expect(screen.getByText("Test Stat")).toBeInTheDocument();
@@ -134,7 +134,7 @@ describe("StatCard", () => {
         title="Test Stat"
         value="100"
         trend={{ value: 15, isPositive: true }}
-      />
+      />,
     );
 
     expect(screen.getByText("15%")).toBeInTheDocument();
@@ -149,7 +149,7 @@ describe("StatCard", () => {
         title="Test Stat"
         value="100"
         trend={{ value: 10, isPositive: false }}
-      />
+      />,
     );
 
     expect(screen.getByText("10%")).toBeInTheDocument();
@@ -169,7 +169,7 @@ describe("StatCard", () => {
   it("should apply custom className", () => {
     const customClass = "custom-stat-card";
     const { container } = render(
-      <StatCard title="Test Stat" value="100" className={customClass} />
+      <StatCard title="Test Stat" value="100" className={customClass} />,
     );
 
     expect(container.firstChild).toHaveClass(customClass);
@@ -187,7 +187,7 @@ describe("StatCard", () => {
         title="Test Stat"
         value="100"
         trend={{ value: 5, isPositive: false }}
-      />
+      />,
     );
 
     const trendIcon = container.querySelector(".rotate-180");

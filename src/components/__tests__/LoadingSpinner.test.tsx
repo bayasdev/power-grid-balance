@@ -11,7 +11,7 @@ describe("LoadingSpinner", () => {
     expect(spinnerContainer).toHaveClass(
       "flex",
       "items-center",
-      "justify-center"
+      "justify-center",
     );
   });
 
@@ -37,7 +37,7 @@ describe("LoadingCard", () => {
 
     expect(screen.getByText("Cargando datos...")).toBeInTheDocument();
     expect(
-      screen.getByText("Por favor espera mientras se cargan los datos.")
+      screen.getByText("Por favor espera mientras se cargan los datos."),
     ).toBeInTheDocument();
   });
 

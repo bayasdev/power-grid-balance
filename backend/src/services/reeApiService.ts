@@ -157,9 +157,6 @@ export class REEApiService {
             error instanceof Error ? error : new Error(String(error)),
           );
         }
-
-        // Wait before retrying
-        await this.delay(this.retryDelay * attempt);
       }
     }
 
@@ -216,10 +213,6 @@ export class REEApiService {
     const end = format(endDate, "yyyy-MM-dd'T'HH:mm");
 
     return `${this.baseUrl}/es/datos/balance/balance-electrico?start_date=${start}&end_date=${end}&time_trunc=${timeTrunc}`;
-  }
-
-  private delay(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
 

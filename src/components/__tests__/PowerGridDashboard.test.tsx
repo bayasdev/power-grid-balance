@@ -76,12 +76,12 @@ describe("PowerGridDashboard", () => {
     render(<PowerGridDashboard />);
 
     expect(
-      screen.getByText("Dashboard de Balance Energético")
+      screen.getByText("Dashboard de Balance Energético"),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Monitor en tiempo real del balance de energía eléctrica"
-      )
+        "Monitor en tiempo real del balance de energía eléctrica",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -134,7 +134,7 @@ describe("PowerGridDashboard", () => {
 
     // The component should render without errors, indicating ErrorBoundary is working
     expect(
-      screen.getByText("Dashboard de Balance Energético")
+      screen.getByText("Dashboard de Balance Energético"),
     ).toBeInTheDocument();
   });
 
