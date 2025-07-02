@@ -2,6 +2,8 @@
 
 Un dashboard en tiempo real para monitorear el balance de energía eléctrica en España utilizando datos de Red Eléctrica de España (REE).
 
+https://github.com/user-attachments/assets/0c138635-c14c-4482-9b4e-7c67afa1ae32
+
 ## 📋 Descripción del Proyecto
 
 Este proyecto consiste en una aplicación full-stack que:
