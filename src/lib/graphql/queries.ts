@@ -136,7 +136,7 @@ export const GET_SUMMARY_STATS = gql`
 `;
 
 export const MANUAL_DATA_FETCH = gql`
-  mutation ManualDataFetch($type: String!) {
+  mutation ManualDataFetch($type: FetchTypeInput!) {
     manualDataFetch(type: $type) {
       success
       message

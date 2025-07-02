@@ -63,7 +63,7 @@ describe("SummaryStatsComponent", () => {
   it("should display scheduler status as active", () => {
     render(<SummaryStatsComponent stats={mockStats} />);
 
-    expect(screen.getByText("Estado del Planificador")).toBeInTheDocument();
+    expect(screen.getByText("Ingesta de Datos")).toBeInTheDocument();
     expect(screen.getByText("Activo")).toBeInTheDocument();
     expect(screen.getByText("3")).toBeInTheDocument();
     expect(

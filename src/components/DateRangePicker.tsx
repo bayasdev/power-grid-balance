@@ -1,4 +1,3 @@
-import React from "react";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";

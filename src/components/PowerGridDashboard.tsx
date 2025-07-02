@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { RefreshCw, Download, Settings } from "lucide-react";
 import {
   useElectricBalanceByDateRange,
@@ -12,7 +12,6 @@ import {
 } from "@/lib/utils/dataUtils";
 import type { EnergySourceCategory } from "@/lib/types";
 
-// Components
 import { ErrorBoundary } from "./ErrorBoundary";
 import { LoadingCard, LoadingSpinner } from "./LoadingSpinner";
 import { ErrorDisplay } from "./ErrorDisplay";
@@ -20,8 +19,8 @@ import { DateRangePicker, QuickDateButtons } from "./DateRangePicker";
 import { SummaryStatsComponent } from "./SummaryStats";
 import { TimeSeriesChart } from "./charts/TimeSeriesChart";
 import { EnergyPieChart, EnergyDonutChart } from "./charts/EnergyPieChart";
+import { ManualDataFetchControls } from "./ManualDataFetchControls";
 
-// UI Components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -75,7 +74,8 @@ export const PowerGridDashboard: React.FC = () => {
 
   const handleManualRefresh = async () => {
     try {
-      await manualFetch("current");
+      // Fetch both current and previous data for a comprehensive refresh
+      await Promise.all([manualFetch("current"), manualFetch("previous")]);
       retryBalance();
       retryStats();
     } catch (error) {
@@ -142,57 +142,6 @@ export const PowerGridDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Controls */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Settings className="h-4 w-4" />
-              Controles de Filtrado
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex flex-col gap-4 md:flex-row md:items-end">
-              <div className="flex-1">
-                <label className="text-sm font-medium mb-2 block">
-                  Rango de Fechas
-                </label>
-                <DateRangePicker
-                  dateRange={dateRange}
-                  onDateRangeChange={updateDateRange}
-                  onPresetSelect={setPresetRange}
-                />
-              </div>
-
-              <div className="flex gap-2">
-                <QuickDateButtons onPresetSelect={setPresetRange} />
-              </div>
-            </div>
-
-            <div>
-              <label className="text-sm font-medium mb-2 block">
-                Categoría de Energía
-              </label>
-              <Select
-                value={selectedCategory}
-                onValueChange={(value) =>
-                  setSelectedCategory(value as EnergySourceCategory | "all")
-                }
-              >
-                <SelectTrigger className="w-48">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Todas las categorías</SelectItem>
-                  <SelectItem value="Renovable">Renovable</SelectItem>
-                  <SelectItem value="No-Renovable">No Renovable</SelectItem>
-                  <SelectItem value="Almacenamiento">Almacenamiento</SelectItem>
-                  <SelectItem value="Demanda">Demanda</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Summary Statistics */}
         {statsLoading ? (
           <LoadingCard title="Cargando estadísticas..." />
@@ -201,6 +150,70 @@ export const PowerGridDashboard: React.FC = () => {
         ) : summaryStats ? (
           <SummaryStatsComponent stats={summaryStats} />
         ) : null}
+
+        {/* Controls Row */}
+        <div className="grid gap-4 md:grid-cols-4">
+          {/* Date and Filter Controls */}
+          <Card className="md:col-span-3">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Settings className="h-4 w-4" />
+                Controles de Filtrado
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex flex-col gap-4 md:flex-row md:items-end">
+                <div className="flex-1">
+                  <label className="text-sm font-medium mb-2 block">
+                    Rango de Fechas
+                  </label>
+                  <DateRangePicker
+                    dateRange={dateRange}
+                    onDateRangeChange={updateDateRange}
+                    onPresetSelect={setPresetRange}
+                  />
+                </div>
+
+                <div className="flex gap-2">
+                  <QuickDateButtons onPresetSelect={setPresetRange} />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium mb-2 block">
+                  Categoría de Energía
+                </label>
+                <Select
+                  value={selectedCategory}
+                  onValueChange={(value) =>
+                    setSelectedCategory(value as EnergySourceCategory | "all")
+                  }
+                >
+                  <SelectTrigger className="w-48">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todas las categorías</SelectItem>
+                    <SelectItem value="Renovable">Renovable</SelectItem>
+                    <SelectItem value="No-Renovable">No Renovable</SelectItem>
+                    <SelectItem value="Almacenamiento">
+                      Almacenamiento
+                    </SelectItem>
+                    <SelectItem value="Demanda">Demanda</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Manual Data Fetch Controls */}
+          <ManualDataFetchControls
+            onFetchComplete={() => {
+              retryBalance();
+              retryStats();
+            }}
+          />
+        </div>
 
         {/* Charts Section */}
         <Tabs defaultValue="timeseries" className="space-y-4">

@@ -1,4 +1,3 @@
-import React from "react";
 import { AlertTriangle, RefreshCw, WifiOff } from "lucide-react";
 import type { ApolloError } from "@apollo/client";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";

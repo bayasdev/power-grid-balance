@@ -1,4 +1,3 @@
-import React from "react";
 import { PieChart, Pie, Legend, Cell } from "recharts";
 import type { SourceTotalData } from "@/lib/types";
 import {

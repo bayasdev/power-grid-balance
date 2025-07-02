@@ -1,16 +1,16 @@
-import React from "react";
 import {
   Activity,
   Database,
   Zap,
   TrendingUp,
   Calendar,
-  Settings,
+  FunnelPlus,
 } from "lucide-react";
 import type { SummaryStats } from "@/lib/types";
 import { formatDateTime } from "@/lib/utils/dataUtils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 interface SummaryStatsProps {
   stats: SummaryStats;
@@ -100,8 +100,8 @@ export const SummaryStatsComponent: React.FC<SummaryStatsProps> = ({
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Settings className="h-4 w-4" />
-              Estado del Planificador
+              <FunnelPlus className="h-4 w-4" />
+              Ingesta de Datos
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -109,7 +109,10 @@ export const SummaryStatsComponent: React.FC<SummaryStatsProps> = ({
               <div className="flex items-center justify-between">
                 <span className="text-sm">Estado:</span>
                 <Badge
-                  variant={stats.scheduler.isRunning ? "default" : "secondary"}
+                  className={cn(
+                    "text-white",
+                    stats.scheduler.isRunning ? "bg-green-600" : "bg-red-600",
+                  )}
                 >
                   {stats.scheduler.isRunning ? "Activo" : "Inactivo"}
                 </Badge>
