@@ -121,7 +121,7 @@ Crear un archivo `.env` en la carpeta `backend/`:
 DATABASE_URL="mongodb+srv://usuario:password@cluster.mongodb.net/power-grid-balance"
 ```
 
-### Instalación
+### Instalación Local
 
 ```bash
 # Instalar dependencias del proyecto completo
@@ -137,6 +137,88 @@ pnpm run db:generate
 # Sincronizar esquema con la base de datos
 pnpm run db:push
 ```
+
+## 🐳 Ejecución con Docker
+
+### Prerrequisitos para Docker
+
+- Docker
+- Docker Compose
+
+### Variables de Entorno para Docker
+
+Crear un archivo `.env` en la carpeta `backend/` con la configuración de MongoDB:
+
+```env
+DATABASE_URL="mongodb+srv://usuario:password@cluster.mongodb.net/power-grid-balance"
+```
+
+### Ejecutar con Docker Compose
+
+```bash
+# Construir y ejecutar todos los servicios
+docker-compose up --build
+
+# Ejecutar en segundo plano
+docker-compose up -d --build
+
+# Ver logs de los servicios
+docker-compose logs -f
+
+# Parar los servicios
+docker-compose down
+```
+
+### Servicios Docker
+
+La aplicación se ejecuta en dos contenedores:
+
+- **Backend**: `http://localhost:3000`
+  - API GraphQL en `http://localhost:3000/graphql`
+  - GraphQL Playground disponible en el navegador
+- **Frontend**: `http://localhost:5173`
+  - Dashboard React con Nginx como servidor web
+
+### Comandos Docker Útiles
+
+```bash
+# Reconstruir solo un servicio específico
+docker-compose build backend
+docker-compose build frontend
+
+# Reiniciar un servicio específico
+docker-compose restart backend
+
+# Ver logs de un servicio específico
+docker-compose logs -f backend
+docker-compose logs -f frontend
+
+# Ejecutar comandos dentro del contenedor del backend
+docker-compose exec backend sh
+
+# Eliminar contenedores y volúmenes
+docker-compose down -v
+```
+
+### Arquitectura Docker
+
+```mermaid
+graph TD
+    A[Docker Compose] --> B[Backend Container]
+    A --> C[Frontend Container]
+    B --> D[MongoDB Atlas]
+    C --> E[Nginx Server]
+    F[Puerto 3000] --> B
+    G[Puerto 5173] --> C
+    H[REE API] --> B
+```
+
+### Notas sobre Docker
+
+- El frontend está configurado para comunicarse con el backend usando `http://backend:3000/graphql` dentro de la red Docker
+- Nginx está configurado con compresión gzip y headers de seguridad
+- Los contenedores se reinician automáticamente a menos que se detengan manualmente
+- El backend incluye la generación automática del cliente Prisma durante la construcción
 
 ## 🖥️ Cómo Ejecutar y Testear el Backend
 
